@@ -18,13 +18,14 @@ async function comparePasswordWithEmail(email, password) {
     const storedHashedPassword = user.Password;
     // Compare the received password with the stored hashed password
     const passwordsMatch = await bcrypt.compare(password, storedHashedPassword);
-
+    console.log(passwordsMatch)
+   
     if (passwordsMatch) {
       // Passwords match, login successful
       return { success: true,ID_Utilisateur:user.ID_Utilisateur ,message: 'Login successful' };
     } else {
       // Passwords do not match, login failed
-      return { success: false,ID_Utilsateur:user.ID_Utilisateur, message: 'Incorrect email or password' };
+      return { success: false,ID_Utilsateur:user.ID_Utilisateur, message: 'Incorrect password, Try again!' };
     }
   } catch (error) {
     // Error occurred

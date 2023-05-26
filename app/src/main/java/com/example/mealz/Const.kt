@@ -1,3 +1,3 @@
 package com.example.mealz
 
-const val url = "http://192.168.26.107:4004"
+const val url = "https://17ec-41-111-19-181.ngrok-free.app/"

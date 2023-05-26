@@ -3,8 +3,6 @@
 var _require = require('./prismaImport'),
     prisma = _require.prisma;
 
-var bcrypt = require('bcrypt');
-
 function getUsers() {
   return regeneratorRuntime.async(function getUsers$(_context) {
     while (1) {
@@ -45,41 +43,46 @@ function findUserByMail(mail) {
   });
 }
 
-function insertUser(idUser, name, name2, email, adress, password) {
-  var saltRounds, hashedPassword, newUser;
+function insertUser(username, email, password, address) {
+  var newUser;
   return regeneratorRuntime.async(function insertUser$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
-          // Encrypt the password
-          saltRounds = 10;
+          _context3.prev = 0;
           _context3.next = 3;
-          return regeneratorRuntime.awrap(bcrypt.hash(password, saltRounds));
-
-        case 3:
-          hashedPassword = _context3.sent;
-          _context3.next = 6;
           return regeneratorRuntime.awrap(prisma.utilisateur.create({
             data: {
-              ID_Utilisateur: idUser,
-              Nom: name,
-              Prenom: name2,
+              Nom: username,
               Mail: email,
-              Password: hashedPassword,
-              Adresse: adress
+              Password: password,
+              Adresse: address
             }
           }));
 
-        case 6:
+        case 3:
           newUser = _context3.sent;
-          return _context3.abrupt("return", newUser);
+          return _context3.abrupt("return", {
+            success: true,
+            ID_Utilisateur: newUser.ID_Utilisateur,
+            message: 'User signed up successfully'
+          });
 
-        case 8:
+        case 7:
+          _context3.prev = 7;
+          _context3.t0 = _context3["catch"](0);
+          return _context3.abrupt("return", {
+            success: false,
+            ID_Utilisateur: 0,
+            message: 'Sign Up failed'
+          });
+
+        case 10:
         case "end":
           return _context3.stop();
       }
     }
-  });
+  }, null, null, [[0, 7]]);
 }
 
 module.exports = {

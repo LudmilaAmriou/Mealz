@@ -6,23 +6,28 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.content.edit
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.mealz.Entity.LoginRequest
+import com.example.mealz.Entity.SignUpRequest
 import com.example.mealz.ViewModel.LoginModel
+import com.example.mealz.ViewModel.SignUpModel
 
 import com.example.mealz.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
     private lateinit var binding: ActivityMainBinding
+    lateinit var signUpModel: SignUpModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        signUpModel = ViewModelProvider(this).get(SignUpModel::class.java)
         HomePage().setGradientTextColor(
             binding.textView23,
             Color.parseColor("#DC220F"),
@@ -37,34 +42,35 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LogIn::class.java)
             startActivity(intent)
         }
-//        binding.buttonLogin.setOnClickListener {
-//            val email = binding.emailField.text.toString()
-//            val password = binding.passwordField.text.toString()
-//            val log = LoginRequest(email, password) // Initialize the log property
-//            loginModel.logUser(log)
-//
-//            // Move the observer outside the button click listener
-//            loginModel.user.observe(this, Observer { utilisateur ->
-//                if (utilisateur != null) {
-//                    if (utilisateur.success) {
-//                        val sharedPreferences = getSharedPreferences("my_app", Context.MODE_PRIVATE)
-//                        sharedPreferences.edit {
-//                            putBoolean("isLoggedIn", true)
-//                        }
-//                        // Continue with the desired logic for a successful login
-//                        // Redirect to cart page
-//                        /*
-//                                val intent = Intent(this, HomePage::class.java)
-//                                intent.putExtra("screen", screen)
-//                                startActivity(intent)
-//                                */
-//                        finish()
-//                    }
-//                }
-//                if (utilisateur != null) {
-//                    Toast.makeText(this, utilisateur.message, Toast.LENGTH_SHORT).show()
-//                }
-//            })
-//        }
+         binding.button.setOnClickListener {
+            val name = binding.NameField.text.toString()
+            val email = binding.EmailField.text.toString()
+            val password = binding.PasswordField.text.toString()
+            val  address = binding.AddressField.text.toString()
+            val signup = SignUpRequest(username = name, email =  email, password = password, address = address) // Initialize the signup property
+            signUpModel.signUser(signup)
+
+            signUpModel.user.observe(this, Observer { utilisateur ->
+                if (utilisateur != null) {
+                    if (utilisateur.success) {
+                        val sharedPreferences = getSharedPreferences("my_app", Context.MODE_PRIVATE)
+                        sharedPreferences.edit {
+                            putBoolean("isLoggedIn", true)
+                        }
+                        // Continue with the desired logic for a successful login
+                        // Redirect to cart page
+                        /*
+                                val intent = Intent(this, HomePage::class.java)
+                                intent.putExtra("screen", screen)
+                                startActivity(intent)
+                                */
+                        finish()
+                    }
+                }
+                if (utilisateur != null) {
+                    Toast.makeText(this, utilisateur.message, Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
     }
 }

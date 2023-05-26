@@ -4,8 +4,9 @@ const { findMenuByRes,findMenuDetail } = require('./menuQueries');
 const express = require('express');
 const bodyParser = require('body-parser');
 const {prisma} = require('./prismaImport')
-const mysql = require('mysql');
+const { insertUser } = require('./utilisateurQueries');
 const app = express();
+const bcrypt = require('bcrypt');
 
 app.use(bodyParser.json());
 // Define an endpoint to get all restaurants
@@ -46,12 +47,11 @@ app.get('/menu/:menuId', async(req, res) => {
     res.status(500).json({ error: 'An error occurred while fetching menu details' });
 }
 });
-// LogIn
 
-// Example route handler in Express.js
+// LogIn
 app.post('/login', async (req, res) => {
  const { mail, password } = req.body;
- console.log(req.body);
+ //console.log(req.body);
   // Compare the password with the stored hashed password
   const comparisonResult = await comparePasswordWithEmail(mail, password);
 
@@ -59,6 +59,20 @@ app.post('/login', async (req, res) => {
   res.json(comparisonResult);
 });
 
+//Sign Up
+app.post('/signup', async (req, res) => {
+  const saltRounds = 10;
+  
+  const { username, email, password, address } = req.body;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  console.log(req.body);
+   // Compare the password with the stored hashed password
+   const comparisonResult = await insertUser(username,email,hashedPassword,address);
+ 
+   // Send the comparison result back to Kotlin
+   res.json(comparisonResult);
+ });
+ 
 
 app.get('/', async (req, res) => {
   res.send('Hello World!')

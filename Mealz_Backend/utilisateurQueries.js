@@ -1,5 +1,5 @@
 const { prisma } = require('./prismaImport');
-const bcrypt = require('bcrypt');
+
 
 async function getUsers() {
     return prisma.utilisateur.findMany();
@@ -12,23 +12,22 @@ async function getUsers() {
     });
     return user;
   }
-  async function insertUser(idUser,name,name2, email, adress,password) {
-          // Encrypt the password
-          const saltRounds = 10;
-          const hashedPassword = await bcrypt.hash(password, saltRounds);
-      
+  async function insertUser(username, email,password,address) {
+          
+    try{
     const newUser = await prisma.utilisateur.create({
       data: {
-        ID_Utilisateur:idUser,
-        Nom: name,
-        Prenom:name2,
+        Nom: username,
         Mail: email,
-        Password: hashedPassword,
-        Adresse:adress,
+        Password: password,
+        Adresse:address,
       },
     });
-    return newUser;
+    return { success: true,ID_Utilisateur:newUser.ID_Utilisateur ,message: 'User signed up successfully' };
+  }catch{
+    return { success: false,ID_Utilisateur:0 ,message: 'Sign Up failed' };
   }
+}
 module.exports = {
     getUsers,
     findUserByMail,

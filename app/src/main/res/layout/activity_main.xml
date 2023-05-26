@@ -207,7 +207,7 @@
         app:layout_constraintWidth_percent="0.8" />
 
     <EditText
-        android:id="@+id/Phone_field"
+        android:id="@+id/Address_field"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="20dp"
@@ -217,7 +217,7 @@
         android:ems="10"
         android:fontFamily="@font/poppins_regular"
         android:hint="Address"
-        android:inputType="phone"
+        android:inputType="text"
         android:paddingHorizontal="20dp"
         android:paddingVertical="10dp"
         android:textColor="@color/white_grey"
@@ -246,7 +246,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Phone_field"
+        app:layout_constraintTop_toBottomOf="@+id/Address_field"
         app:layout_constraintWidth_percent="0.8" />
 
 

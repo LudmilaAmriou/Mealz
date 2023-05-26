@@ -50,7 +50,7 @@ class CartItemsAdapter(
                     Color.parseColor("#F05600")
                 )
                 Price.text = menuItem.Prix_unitare.toString() + " DA"
-                category.text = menuItem.Nom_TMenu
+                category.text = menuItem.Nom_TMenu.toString()
             }
         }
         // Method to handle item removal

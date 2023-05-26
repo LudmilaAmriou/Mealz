@@ -17,9 +17,13 @@ var bodyParser = require('body-parser');
 var _require4 = require('./prismaImport'),
     prisma = _require4.prisma;
 
-var mysql = require('mysql');
+var _require5 = require('./utilisateurQueries'),
+    insertUser = _require5.insertUser;
 
 var app = express();
+
+var bcrypt = require('bcrypt');
+
 app.use(bodyParser.json()); // Define an endpoint to get all restaurants
 
 app.get('/restaus/getall', function _callee(req, res) {
@@ -121,7 +125,6 @@ app.get('/menu/:menuId', function _callee3(req, res) {
     }
   }, null, null, [[0, 8]]);
 }); // LogIn
-// Example route handler in Express.js
 
 app.post('/login', function _callee4(req, res) {
   var _req$body, mail, password, comparisonResult;
@@ -130,34 +133,66 @@ app.post('/login', function _callee4(req, res) {
     while (1) {
       switch (_context4.prev = _context4.next) {
         case 0:
-          _req$body = req.body, mail = _req$body.mail, password = _req$body.password;
-          console.log(req.body); // Compare the password with the stored hashed password
+          _req$body = req.body, mail = _req$body.mail, password = _req$body.password; //console.log(req.body);
+          // Compare the password with the stored hashed password
 
-          _context4.next = 4;
+          _context4.next = 3;
           return regeneratorRuntime.awrap(comparePasswordWithEmail(mail, password));
 
-        case 4:
+        case 3:
           comparisonResult = _context4.sent;
           // Send the comparison result back to Kotlin
           res.json(comparisonResult);
 
-        case 6:
+        case 5:
         case "end":
           return _context4.stop();
       }
     }
   });
-});
-app.get('/', function _callee5(req, res) {
+}); //Sign Up
+
+app.post('/signup', function _callee5(req, res) {
+  var saltRounds, _req$body2, username, email, password, address, hashedPassword, comparisonResult;
+
   return regeneratorRuntime.async(function _callee5$(_context5) {
     while (1) {
       switch (_context5.prev = _context5.next) {
+        case 0:
+          saltRounds = 10;
+          _req$body2 = req.body, username = _req$body2.username, email = _req$body2.email, password = _req$body2.password, address = _req$body2.address;
+          _context5.next = 4;
+          return regeneratorRuntime.awrap(bcrypt.hash(password, saltRounds));
+
+        case 4:
+          hashedPassword = _context5.sent;
+          console.log(req.body); // Compare the password with the stored hashed password
+
+          _context5.next = 8;
+          return regeneratorRuntime.awrap(insertUser(username, email, hashedPassword, address));
+
+        case 8:
+          comparisonResult = _context5.sent;
+          // Send the comparison result back to Kotlin
+          res.json(comparisonResult);
+
+        case 10:
+        case "end":
+          return _context5.stop();
+      }
+    }
+  });
+});
+app.get('/', function _callee6(req, res) {
+  return regeneratorRuntime.async(function _callee6$(_context6) {
+    while (1) {
+      switch (_context6.prev = _context6.next) {
         case 0:
           res.send('Hello World!');
 
         case 1:
         case "end":
-          return _context5.stop();
+          return _context6.stop();
       }
     }
   });

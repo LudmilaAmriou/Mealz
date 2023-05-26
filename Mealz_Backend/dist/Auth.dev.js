@@ -43,9 +43,10 @@ function comparePasswordWithEmail(email, password) {
 
         case 10:
           passwordsMatch = _context.sent;
+          console.log(passwordsMatch);
 
           if (!passwordsMatch) {
-            _context.next = 15;
+            _context.next = 16;
             break;
           }
 
@@ -55,19 +56,19 @@ function comparePasswordWithEmail(email, password) {
             message: 'Login successful'
           });
 
-        case 15:
+        case 16:
           return _context.abrupt("return", {
             success: false,
             ID_Utilsateur: user.ID_Utilisateur,
-            message: 'Incorrect email or password'
+            message: 'Incorrect password, Try again!'
           });
 
-        case 16:
-          _context.next = 22;
+        case 17:
+          _context.next = 23;
           break;
 
-        case 18:
-          _context.prev = 18;
+        case 19:
+          _context.prev = 19;
           _context.t0 = _context["catch"](0);
           // Error occurred
           console.error('Error comparing passwords:', _context.t0);
@@ -77,12 +78,12 @@ function comparePasswordWithEmail(email, password) {
             message: 'An error occurred'
           });
 
-        case 22:
+        case 23:
         case "end":
           return _context.stop();
       }
     }
-  }, null, null, [[0, 18]]);
+  }, null, null, [[0, 19]]);
 } // ADD TEST USER TO DB
 // const idUser = 1;
 // const name = 'test';

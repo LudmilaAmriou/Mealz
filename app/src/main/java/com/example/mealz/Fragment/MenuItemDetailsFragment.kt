@@ -38,10 +38,12 @@ class MenuItemDetailsFragment : Fragment() {
         val menuId = arguments?.getInt("mId")
         Log.d("HERE THE ID OF MENU", menuId.toString())
         menuModel = ViewModelProvider(requireActivity()).get(MenuModel::class.java)
-        menuId?.let {
-            menuModel.menu.value = null;
-            menuModel.loadMenuDetails(it) }
-            menuModel.menu.observe(viewLifecycleOwner, Observer { menu ->
+//        menuId?.let {
+//           // menuModel.menu.value = null;
+//            menuModel.loadMenuDetails(it) }
+
+        menuModel.menu.observe(viewLifecycleOwner, Observer { menu ->
+
 
             if (menu != null) {
                 binding.Category.text = menu.Nom_TMenu
@@ -59,19 +61,19 @@ class MenuItemDetailsFragment : Fragment() {
                 binding.cart.setOnClickListener {
                     // Redirect to authenticated page
                     findNavController().navigate(R.id.action_menuItemDetailsFragment_to_cartFragment)
-
+                    Log.d("TGG",menu.Nom_TMenu.toString())
                     // Insert element to database
                     val resto = appDataBase.buildDatabase(requireContext())?.getUserCartDAO()
                         ?.getUserCart(1)
                     if (resto.isNullOrEmpty() || resto[0].IDRestaurant == menu.ID_Restaurant) {
                         val userCart = UserCart(
-                            IDUtilisateur = 1,
+                            IDUtilisateur = 1, // must change
                             IDMenu = menu.ID_Menu,
                             Quantity = 1,
                             IDRestaurant = menu.ID_Restaurant,
                             Image = menu.Image,
                             Prix_unitare = menu.Prix_unitare,
-                            Nom_TMenu = menu.Nom_TMenu,
+                            Nom_TMenu = menu.Nom_TMenu.toString(),
                             Nom = menu.Nom,
                         )
                         appDataBase.buildDatabase(requireContext())?.getUserCartDAO()
