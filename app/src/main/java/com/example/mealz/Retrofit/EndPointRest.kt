@@ -15,11 +15,16 @@ interface EndPointRest {
     suspend fun getMenus(@Path("restaurantId") restaurantId: Int): Response<List<Menu>>
     @GET("/menu/{menuId}")
     suspend fun getMenu(@Path("menuId") menuId: Int): Response<Menu>
+    @GET("/restau/{restaurantId}")
+    suspend fun getRestauById(@Path("restaurantId") restaurantId: Int): Response<Restaurant>
     @POST("/login")
     suspend fun login(@Body requestBody: LoginRequest): Response<utilisateur>
     @POST("/signup")
     suspend fun signup(@Body requestBody: SignUpRequest): Response<utilisateur>
-
+    @GET("/reviews/{restaurantId}")
+    suspend fun getReviews(@Path("restaurantId") restaurantId: Int): Response<List<Rating>>
+    @POST("/review")
+    suspend fun review(@Body requestBody: Rating): Response<Boolean>
 
     companion object {
         @Volatile

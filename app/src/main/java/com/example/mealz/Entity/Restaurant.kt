@@ -6,6 +6,7 @@ import java.text.DecimalFormat
 data class Restaurant (
    val ID_Restaurant:Int,
    val Nom:String?,
+   val review_pic:String?,
    val Localisation:String?,
    val Facebook_Web: String?,
    val Facebook_App: String?,

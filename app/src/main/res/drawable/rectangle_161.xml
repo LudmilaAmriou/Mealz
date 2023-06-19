@@ -5,5 +5,5 @@
     android:viewportHeight="230">
   <path
       android:pathData="M0,16C0,7.16 7.16,0 16,0H344C352.84,0 360,7.16 360,16V230H0V16Z"
-      android:fillColor="#2A2C39"/>
+      android:fillColor="@color/cardview_shadow_start_color"/>
 </vector>

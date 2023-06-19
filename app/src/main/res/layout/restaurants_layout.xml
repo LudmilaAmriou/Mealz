@@ -174,7 +174,7 @@
                 android:layout_marginRight="2dp"
                 app:layout_constraintEnd_toStartOf="@id/rating"
                 app:layout_constraintTop_toTopOf="@+id/email"
-                app:srcCompat="@drawable/rating" />
+                app:srcCompat="@drawable/rating_orange" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

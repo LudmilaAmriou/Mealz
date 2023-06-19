@@ -3,4 +3,6 @@
     <style name="GradientText" parent="@android:style/TextAppearance">
         <item name="android:textColorHighlight">@color/gradient_text_color</item>
     </style>
+
+
 </resources>

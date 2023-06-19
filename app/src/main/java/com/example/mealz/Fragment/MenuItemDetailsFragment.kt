@@ -38,9 +38,9 @@ class MenuItemDetailsFragment : Fragment() {
         val menuId = arguments?.getInt("mId")
         Log.d("HERE THE ID OF MENU", menuId.toString())
         menuModel = ViewModelProvider(requireActivity()).get(MenuModel::class.java)
-//        menuId?.let {
-//           // menuModel.menu.value = null;
-//            menuModel.loadMenuDetails(it) }
+        menuId?.let {
+            menuModel.menu.value = null
+            menuModel.loadMenuDetails(it) }
 
         menuModel.menu.observe(viewLifecycleOwner, Observer { menu ->
 

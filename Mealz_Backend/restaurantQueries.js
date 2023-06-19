@@ -8,6 +8,15 @@ async function getRest() {
     JOIN type t ON rt.ID_Type = t.ID_Type
   `;
   }
+async function getRestById(id){
+  const restau = await prisma.restaurant.findFirst({
+    where: {
+      ID_Restaurant: parseInt(id,10),
+    },
+});
+  return restau;
+}
 module.exports = {
     getRest,
+    getRestById,
   };

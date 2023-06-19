@@ -1,5 +1,6 @@
 const {comparePasswordWithEmail} = require('./Auth');
-const { getRest } = require('./restaurantQueries');
+const { getRest,getRestById } = require('./restaurantQueries');
+const { getReviews,sendReview } = require('./reviewQueries');
 const { findMenuByRes,findMenuDetail } = require('./menuQueries');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -47,6 +48,18 @@ app.get('/menu/:menuId', async(req, res) => {
     res.status(500).json({ error: 'An error occurred while fetching menu details' });
 }
 });
+// Get rest by Id
+app.get('/restau/:restaurantId', async(req, res) => {
+  try{
+    const restaurantId = req.params.restaurantId;
+    const restau = await getRestById(restaurantId);
+  
+    res.json(restau);
+} catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while fetching restaus' });
+}
+});
 
 // LogIn
 app.post('/login', async (req, res) => {
@@ -65,7 +78,7 @@ app.post('/signup', async (req, res) => {
   
   const { username, email, password, address } = req.body;
   const hashedPassword = await bcrypt.hash(password, saltRounds);
-  console.log(req.body);
+  //console.log(req.body);
    // Compare the password with the stored hashed password
    const comparisonResult = await insertUser(username,email,hashedPassword,address);
  
@@ -73,6 +86,30 @@ app.post('/signup', async (req, res) => {
    res.json(comparisonResult);
  });
  
+// Get the reviews
+app.get('/reviews/:restaurantId', async (req, res) => {
+  try {
+    const restaurantId = req.params.restaurantId;
+    const reviews = await getReviews(restaurantId);
+   //  console.log(reviews);
+    res.json(reviews);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while fetching restaurants' });
+  }
+});
+
+// Send reviews
+app.post('/review', async (req, res) => {
+ 
+  
+  const { id_user, id_rest, rating, comment } = req.body;
+ 
+   const newrev = await sendReview(id_user,id_rest,rating,comment);
+ 
+   // Send the result back to Kotlin
+   res.json(newrev);
+ });
 
 app.get('/', async (req, res) => {
   res.send('Hello World!')

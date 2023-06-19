@@ -53,6 +53,7 @@ model rating {
 model restaurant {
   ID_Restaurant Int      @id
   Nom           String?  @db.VarChar(50)
+  review_pic    String   @db.VarChar(500)
   Localisation  String?  @db.VarChar(500)
   Facebook_Web  String?  @db.VarChar(500)
   Facebook_App  String?  @db.VarChar(500)

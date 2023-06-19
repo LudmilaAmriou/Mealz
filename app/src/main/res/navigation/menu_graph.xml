@@ -46,6 +46,9 @@
         <action
             android:id="@+id/action_restaurantMenuFragment_to_menuItemDetailsFragment"
             app:destination="@id/menuItemDetailsFragment" />
+        <action
+            android:id="@+id/action_restaurantMenuFragment_to_reviewsFragment"
+            app:destination="@id/reviewsFragment" />
     </fragment>
     <fragment
         android:id="@+id/menuItemDetailsFragment"
@@ -67,4 +70,8 @@
         android:name="com.example.mealz.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/reviewsFragment"
+        android:name="com.example.mealz.Fragment.ReviewsFragment"
+        android:label="ReviewsFragment" />
 </navigation>

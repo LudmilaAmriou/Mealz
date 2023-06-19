@@ -49,6 +49,7 @@ class CartFragment : Fragment(){
                 // Delete cart if logged In
                 val num: Int? = appDataBase.buildDatabase(requireContext())?.getUserCartDAO()
                     ?.deleteAllUserCart(1)
+                // Insert in table commande IN DATABASE!
                 if (num != null && num != 0) {
                     Toast.makeText(
                         requireContext(),

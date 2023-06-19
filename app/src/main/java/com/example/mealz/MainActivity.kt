@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                         val sharedPreferences = getSharedPreferences("my_app", Context.MODE_PRIVATE)
                         sharedPreferences.edit {
                             putBoolean("isLoggedIn", true)
+                            utilisateur.ID_Utilisateur?.let { it1 -> putInt("userId", it1) }
                         }
                         // Continue with the desired logic for a successful login
                         // Redirect to cart page

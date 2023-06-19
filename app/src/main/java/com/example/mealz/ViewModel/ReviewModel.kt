@@ -3,21 +3,19 @@ package com.example.mealz.ViewModel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.mealz.Entity.Menu
+import com.example.mealz.Entity.LoginRequest
+import com.example.mealz.Entity.Rating
 import com.example.mealz.Entity.Restaurant
 import com.example.mealz.Retrofit.EndPointRest
 import kotlinx.coroutines.*
-import okhttp3.MediaType
-import okhttp3.RequestBody
 
-
-class MenuModel : ViewModel(){
-    var menu = MutableLiveData<Menu>()
-    val menus = MutableLiveData<List<Menu>>()
-    val restau = MutableLiveData<Restaurant>()
-
+class ReviewModel: ViewModel(){
+    val reviews = MutableLiveData<List<Rating>>()
     val loading = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
+    val stateSend = MutableLiveData<Boolean?>()
+
+
 
     val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         CoroutineScope(Dispatchers.Main).launch   {
@@ -28,16 +26,15 @@ class MenuModel : ViewModel(){
     }
 
 
-    fun loadMenus(restaurantId:Int) {
-        if(menu.value==null) {
+    fun loadReviews(restaurantId:Int) {
+        if(reviews.value==null) {
             loading.value = true
             CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-                val response = EndPointRest.createEndpoint().getMenus(restaurantId)
-              //  Log.d("My response", response.toString())
+                val response = EndPointRest.createEndpoint().getReviews(restaurantId)
                 withContext(Dispatchers.Main) {
                     loading.value = false
                     if (response.isSuccessful && response.body() != null) {
-                        menus.value = response.body()
+                        reviews.value = response.body()
 
                     } else {
 
@@ -49,40 +46,24 @@ class MenuModel : ViewModel(){
 
 
     }
-    fun loadMenuDetails(menuId:Int) {
-        if(menu.value==null) {
+
+    fun sendReview(review:Rating) {
             loading.value = true
             CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-                val response = EndPointRest.createEndpoint().getMenu(menuId)
+                val response = EndPointRest.createEndpoint().review(review)
                 Log.d("My response", response.toString())
                 withContext(Dispatchers.Main) {
                     loading.value = false
                     if (response.isSuccessful && response.body() != null) {
-                        menu.value = response.body()
+                        stateSend.value = response.body()
 
                     } else {
-
                         errorMessage.value = "Une erreur s'est produite"
                     }
                 }
             }
-        }
     }
-    fun loadRest(id:Int){
-        if(restau.value==null) {
-            loading.value = true
-            CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-                val response = EndPointRest.createEndpoint().getRestauById(id)
-                withContext(Dispatchers.Main) {
-                    loading.value = false
-                    if (response.isSuccessful && response.body() != null) {
-                        restau.value = response.body()
-                    } else {
-                        errorMessage.value = "Une erreur s'est produite lors du chargement restau"
-                    }
-                }
-            }
-        }
-    }
+
+
 
 }

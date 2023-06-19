@@ -25,13 +25,14 @@
         android:id="@+id/searchView"
         android:layout_width="0dp"
         android:layout_height="48dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/custom_input_field"
         android:queryHint="Search for restaurants.."
         android:theme="@style/SearchBar_style"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/header_guideline"
-        app:layout_constraintWidth_percent="0.9" >
+        app:layout_constraintWidth_percent="0.9">
 
     </SearchView>
 

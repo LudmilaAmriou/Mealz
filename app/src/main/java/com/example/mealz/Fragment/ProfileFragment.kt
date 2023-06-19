@@ -35,6 +35,7 @@ class  ProfileFragment : Fragment() {
         logoutButton.setOnClickListener(){
             val editor = sharedPreferences.edit()
             editor.putBoolean("isLoggedIn", false)
+            editor.putInt("userId",0)
             editor.apply()
             this.findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
         }

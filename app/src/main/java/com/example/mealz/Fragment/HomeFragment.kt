@@ -16,8 +16,6 @@ import com.example.mealz.Entity.Restaurant
 import com.example.mealz.R
 import com.example.mealz.ViewModel.RestModel
 import com.example.mealz.databinding.FragmentHomeBinding
-
-
 class HomeFragment : Fragment(), CellClickListener {
     lateinit var binding: FragmentHomeBinding
     lateinit var restauModel: RestModel
