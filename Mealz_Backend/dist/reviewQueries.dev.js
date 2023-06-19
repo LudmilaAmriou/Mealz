@@ -40,9 +40,9 @@ function sendReview(ID_User, ID_Rest, Rate, Comment) {
           _context2.next = 3;
           return regeneratorRuntime.awrap(prisma.rating.create({
             data: {
-              ID_Utilisateur: ID_User,
-              ID_Restaurant: ID_Rest,
-              Rating: Rate,
+              ID_Utilisateur: parseInt(ID_User, 10),
+              ID_Restaurant: parseInt(ID_Rest, 10),
+              Rating: parseFloat(Rate),
               Commentaire: Comment
             }
           }));
@@ -54,9 +54,10 @@ function sendReview(ID_User, ID_Rest, Rate, Comment) {
         case 7:
           _context2.prev = 7;
           _context2.t0 = _context2["catch"](0);
+          console.error('Error sending review:', _context2.t0);
           return _context2.abrupt("return", false);
 
-        case 10:
+        case 11:
         case "end":
           return _context2.stop();
       }

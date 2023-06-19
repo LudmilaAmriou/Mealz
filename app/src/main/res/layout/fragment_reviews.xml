@@ -9,7 +9,7 @@
 
     <ImageView
         android:id="@+id/imageView9"
-        android:layout_width="413dp"
+        android:layout_width="407dp"
         android:layout_height="186dp"
         android:src="@drawable/rounded_corner"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,9 +63,9 @@
 
     <EditText
         android:id="@+id/notes"
-        android:layout_width="300dp"
+        android:layout_width="290dp"
         android:layout_height="48dp"
-        android:layout_marginStart="23dp"
+        android:layout_marginStart="7dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/custom_input_field_notes"
         android:fontFamily="@font/poppins_regular"
@@ -73,8 +73,8 @@
         android:paddingHorizontal="20dp"
         android:paddingVertical="10dp"
         android:textColor="@color/white_grey"
-        android:textColorHint="@color/light_blue_grey"
 
+        android:textColorHint="@color/light_blue_grey"
         android:textSize="12sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -110,6 +110,7 @@
         android:id="@+id/send"
         android:layout_width="44dp"
         android:layout_height="41dp"
+        android:layout_marginStart="5dp"
         android:layout_marginBottom="22dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -103,10 +103,10 @@ app.get('/reviews/:restaurantId', async (req, res) => {
 app.post('/review', async (req, res) => {
  
   
-  const { id_user, id_rest, rating, comment } = req.body;
- 
-   const newrev = await sendReview(id_user,id_rest,rating,comment);
- 
+  const { ID_Utilisateur, ID_Restaurant, Rating, Commentaire } = req.body;
+  console.log(req.body);
+   const newrev = await sendReview(ID_Utilisateur,ID_Restaurant,Rating,Commentaire);
+  console.log(newrev);
    // Send the result back to Kotlin
    res.json(newrev);
  });

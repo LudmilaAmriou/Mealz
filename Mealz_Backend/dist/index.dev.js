@@ -255,22 +255,24 @@ app.get('/reviews/:restaurantId', function _callee7(req, res) {
 }); // Send reviews
 
 app.post('/review', function _callee8(req, res) {
-  var _req$body3, id_user, id_rest, rating, comment, newrev;
+  var _req$body3, ID_Utilisateur, ID_Restaurant, Rating, Commentaire, newrev;
 
   return regeneratorRuntime.async(function _callee8$(_context8) {
     while (1) {
       switch (_context8.prev = _context8.next) {
         case 0:
-          _req$body3 = req.body, id_user = _req$body3.id_user, id_rest = _req$body3.id_rest, rating = _req$body3.rating, comment = _req$body3.comment;
-          _context8.next = 3;
-          return regeneratorRuntime.awrap(sendReview(id_user, id_rest, rating, comment));
+          _req$body3 = req.body, ID_Utilisateur = _req$body3.ID_Utilisateur, ID_Restaurant = _req$body3.ID_Restaurant, Rating = _req$body3.Rating, Commentaire = _req$body3.Commentaire;
+          console.log(req.body);
+          _context8.next = 4;
+          return regeneratorRuntime.awrap(sendReview(ID_Utilisateur, ID_Restaurant, Rating, Commentaire));
 
-        case 3:
+        case 4:
           newrev = _context8.sent;
-          // Send the result back to Kotlin
+          console.log(newrev); // Send the result back to Kotlin
+
           res.json(newrev);
 
-        case 5:
+        case 7:
         case "end":
           return _context8.stop();
       }

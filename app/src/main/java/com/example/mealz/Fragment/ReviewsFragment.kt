@@ -41,9 +41,9 @@ class ReviewsFragment : Fragment(), CellClickListener {
         val adapter = ReviewListAdapter(requireActivity(), this)
         binding.recyclerView.adapter = adapter
         restaurantId?.let {
-            reviewModel.reviews.value=null
+            reviewModel.reviews.value = null
             reviewModel.loadReviews(it)
-           }
+        }
         // add Observers
         // loading observer
         reviewModel.loading.observe(requireActivity()) { loading ->
@@ -66,45 +66,47 @@ class ReviewsFragment : Fragment(), CellClickListener {
 
         // Add a review from a specific user
 
-        val sharedPreferences = requireContext().getSharedPreferences("my_app", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireContext().getSharedPreferences("my_app", Context.MODE_PRIVATE)
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
-        if (isLoggedIn) {
-                binding.send.setOnClickListener(){
-                    val review = restaurantId?.let { it1 ->
-                        Rating(
-                            ID_Utilisateur = sharedPreferences.getInt("userId",1),
-                            ID_Restaurant = it1,
-                            Rating = BigDecimal(binding.ratingBar.rating.toDouble()),
-                            Commentaire = binding.notes.text.toString(),
-                            Nom = "user"
-                            )
-                    }
-                    review?.let { it1 -> reviewModel.sendReview(it1) }
-                    // State observer
-                    reviewModel.stateSend.observe(requireActivity()) { state ->
-                        if (state == true){
-                            Toast.makeText(
-                                requireContext(),
-                                "Thank you, your rating will be of great use!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }else{
-                            Toast.makeText(
-                                requireContext(),
-                                "Oups, a problem occured, try to resend again...",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
+        binding.send.setOnClickListener() {
+            if (isLoggedIn) {
 
+                val review = restaurantId?.let { it1 ->
+                    Rating(
+                        ID_Utilisateur = sharedPreferences.getInt("userId", 1),
+                        ID_Restaurant = it1,
+                        Rating = BigDecimal(binding.ratingBar.rating.toDouble()),
+                        Commentaire = binding.notes.text.toString(),
+                        Nom = "user"
+                    )
                 }
-        }else{
-            Toast.makeText(
-                requireContext(),
-                "You can't rate us unless you're logged in!",
-                Toast.LENGTH_SHORT
-            ).show()
+                review?.let { it1 -> reviewModel.sendReview(it1) }
+                // State observer
+                reviewModel.stateSend.observe(requireActivity()) { state ->
+                    if (state == true) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Thank you, your rating will be of great use!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Oups, a problem occured, try to resend again...",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
 
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "You can't rate us unless you're logged in!",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
         }
     }
 
