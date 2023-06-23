@@ -54,7 +54,7 @@
         android:background="@drawable/gradient_red"
         app:circularflow_radiusInDP="2dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name" />
+        app:layout_constraintTop_toBottomOf="@+id/mycart" />
 
     <View
         android:id="@+id/view4"
@@ -63,10 +63,10 @@
         android:background="@drawable/gradient_grey"
         app:circularflow_radiusInDP="2dp"
         app:layout_constraintStart_toEndOf="@+id/view3"
-        app:layout_constraintTop_toBottomOf="@+id/name2" />
+        app:layout_constraintTop_toBottomOf="@+id/myorder" />
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/mycart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="125dp"
@@ -79,7 +79,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/name2"
+        android:id="@+id/myorder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
@@ -87,8 +87,8 @@
         android:text="Orders"
         android:textColor="#83849C"
         android:textSize="16sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/name"
-        app:layout_constraintStart_toEndOf="@+id/name" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/mycart"
+        app:layout_constraintStart_toEndOf="@+id/mycart" />
 
     <ImageView
         android:id="@+id/imageView5"

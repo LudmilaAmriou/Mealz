@@ -18,6 +18,9 @@
             android:id="@+id/action_cartFragment_to_mainActivity"
             app:destination="@id/mainActivity"
             app:popUpTo="@id/cartFragment" />
+        <action
+            android:id="@+id/action_cartFragment_to_orderFragment"
+            app:destination="@id/orderFragment" />
     </fragment>
 
     <fragment
@@ -74,4 +77,12 @@
         android:id="@+id/reviewsFragment"
         android:name="com.example.mealz.Fragment.ReviewsFragment"
         android:label="ReviewsFragment" />
+    <fragment
+        android:id="@+id/orderFragment"
+        android:name="OrderFragment"
+        android:label="OrderFragment" >
+        <action
+            android:id="@+id/action_orderFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+    </fragment>
 </navigation>

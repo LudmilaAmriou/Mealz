@@ -8,6 +8,7 @@ const {prisma} = require('./prismaImport')
 const { insertUser } = require('./utilisateurQueries');
 const app = express();
 const bcrypt = require('bcrypt');
+require('dotenv').config();
 
 app.use(bodyParser.json());
 // Define an endpoint to get all restaurants

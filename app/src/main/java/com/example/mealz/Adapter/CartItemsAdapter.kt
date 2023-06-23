@@ -3,7 +3,10 @@ package com.example.mealz.Adapter
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mealz.Entity.UserCart
@@ -17,7 +20,6 @@ class CartItemsAdapter(
     val data: MutableList<UserCart>,
     private val ctx: Context,
 ) : RecyclerView.Adapter<CartItemsAdapter.MyViewHolder>() {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = CartItemsLayoutBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -35,6 +37,15 @@ class CartItemsAdapter(
         holder.binding.imageButton.setOnClickListener {
             holder.removeItem(menuItem)
         }
+        holder.binding.increase.setOnClickListener {
+            holder.increase(menuItem)
+        }
+
+        holder.binding.decrease.setOnClickListener {
+            if (menuItem.Quantity!! > 0) {
+                holder.decrease(menuItem)
+            }
+        }
     }
 
     inner class MyViewHolder(val binding: CartItemsLayoutBinding) :
@@ -51,6 +62,7 @@ class CartItemsAdapter(
                 )
                 Price.text = menuItem.Prix_unitare.toString() + " DA"
                 category.text = menuItem.Nom_TMenu.toString()
+                quantity.text = menuItem.Quantity.toString()
             }
         }
         // Method to handle item removal
@@ -63,5 +75,20 @@ class CartItemsAdapter(
                 notifyItemRangeChanged(position, data.size)
             }
         }
+        fun increase(menuItem: UserCart){
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                menuItem.Quantity = menuItem.Quantity!! + 1
+                notifyItemChanged(position)
+            }
+        }
+        fun decrease(menuItem: UserCart){
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                menuItem.Quantity = menuItem.Quantity!! - 1
+                notifyItemChanged(position)
+            }
+        }
+
     }
 }

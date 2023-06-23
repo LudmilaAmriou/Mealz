@@ -12,7 +12,7 @@ data class UserCart(
     val IDUtilisateur: Int,
     val IDMenu: Int,
     val IDRestaurant:Int,
-    val Quantity: Int?,
+    var Quantity: Int?,
     val Nom:String?,
     val Prix_unitare:Float?,
     val Image:String?,

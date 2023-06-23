@@ -6,12 +6,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealz.Adapter.CartItemsAdapter
 import com.example.mealz.Entity.UserCart
 import com.example.mealz.LogIn
+import com.example.mealz.R
 import com.example.mealz.appDataBase
 import com.example.mealz.databinding.FragmentCartBinding
 
@@ -24,9 +27,6 @@ class CartFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCartBinding.inflate(inflater, container, false)
-
-
-
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,6 +42,10 @@ class CartFragment : Fragment(){
         myRecyclerView.adapter = myAdapter
         data?.let { countTotalFees(it) }?.let { updateTotalFees(it) }
         binding.name6.text = data?.let { (countTotalFees(it)+500.00).toString() }
+        binding.myorder.setOnClickListener(){
+            findNavController().navigate(R.id.action_cartFragment_to_orderFragment)
+        }
+
         binding.cart3.setOnClickListener() {
             val sharedPreferences = requireContext().getSharedPreferences("my_app", Context.MODE_PRIVATE)
             val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
@@ -59,6 +63,7 @@ class CartFragment : Fragment(){
                     // Notify the adapter that the data has changed
                     myAdapter.data.clear()
                     myAdapter.notifyDataSetChanged()
+                    findNavController().navigate(R.id.action_cartFragment_to_orderFragment)
                 }
 
             } else {  // Start a new activity ... Log In
@@ -68,6 +73,7 @@ class CartFragment : Fragment(){
             }
 
         }
+
     }
     // Function to load data from local db
     fun loadData(id:Int): MutableList<UserCart>? {
@@ -96,5 +102,7 @@ class CartFragment : Fragment(){
         }
         myAdapter.notifyDataSetChanged()
     }
+
+
 
 }
