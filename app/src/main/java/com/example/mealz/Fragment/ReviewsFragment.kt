@@ -1,6 +1,7 @@
 package com.example.mealz.Fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,8 +15,10 @@ import com.example.mealz.Adapter.CellClickListener
 import com.example.mealz.Adapter.ReviewListAdapter
 import com.example.mealz.Entity.Rating
 import com.example.mealz.Entity.Restaurant
+import com.example.mealz.LogIn
 import com.example.mealz.ViewModel.ReviewModel
 import com.example.mealz.databinding.FragmentReviewsBinding
+import com.google.android.material.snackbar.Snackbar
 import java.math.BigDecimal
 
 class ReviewsFragment : Fragment(), CellClickListener {
@@ -61,7 +64,7 @@ class ReviewsFragment : Fragment(), CellClickListener {
 
         // List reviews observer
         reviewModel.reviews.observe(requireActivity()) { reviews ->
-            adapter.setReview(reviews)
+            adapter.setReview(reviews.toMutableList())
         }
 
         // Add a review from a specific user
@@ -100,12 +103,18 @@ class ReviewsFragment : Fragment(), CellClickListener {
                 }
 
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    "You can't rate us unless you're logged in!",
-                    Toast.LENGTH_SHORT
-                ).show()
+                val message = "You can't rate us unless you're logged in!"
+                val actionText = "Login"
 
+
+                // Using a Snackbar
+                val snackbar = Snackbar.make(binding.send, message, Snackbar.LENGTH_LONG)
+                snackbar.setAction(actionText) {
+                    // When the action is clicked, navigate to the login page
+                    val intent = Intent(activity, LogIn::class.java)
+                    startActivity(intent)
+                }
+                snackbar.show()
             }
         }
     }

@@ -18,7 +18,6 @@ class MenuModel : ViewModel(){
 
     val loading = MutableLiveData<Boolean>()
     val errorMessage = MutableLiveData<String>()
-
     val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
         CoroutineScope(Dispatchers.Main).launch   {
             loading.value = false

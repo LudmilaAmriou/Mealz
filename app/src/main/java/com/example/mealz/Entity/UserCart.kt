@@ -16,5 +16,6 @@ data class UserCart(
     val Nom:String?,
     val Prix_unitare:Float?,
     val Image:String?,
-    val Nom_TMenu:String?,
+    val Note: String?,
+    val Nom_TMenu:String?
 )

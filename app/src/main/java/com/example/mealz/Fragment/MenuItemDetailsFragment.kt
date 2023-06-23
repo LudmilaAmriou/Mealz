@@ -56,6 +56,7 @@ class MenuItemDetailsFragment : Fragment() {
                 binding.Price.text = menu.Prix_unitare.toString() + " DA"
                 binding.ServingInfo.text = "1 Person"
                 binding.Description.text = menu.Ingredients
+                binding.IngredientsList.text = menu.Description
 
                 // Add a button to redirect user only if they are logged in
                 binding.cart.setOnClickListener {
@@ -73,6 +74,7 @@ class MenuItemDetailsFragment : Fragment() {
                             IDRestaurant = menu.ID_Restaurant,
                             Image = menu.Image,
                             Prix_unitare = menu.Prix_unitare,
+                            Note = binding.Notes.text.toString(),
                             Nom_TMenu = menu.Nom_TMenu.toString(),
                             Nom = menu.Nom,
                         )
