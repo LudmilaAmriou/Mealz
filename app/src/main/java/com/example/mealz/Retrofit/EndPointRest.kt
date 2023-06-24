@@ -23,7 +23,7 @@ interface EndPointRest {
     suspend fun signup(@Body requestBody: SignUpRequest): Response<utilisateur>
     @GET("/reviews/{restaurantId}")
     suspend fun getReviews(@Path("restaurantId") restaurantId: Int): Response<List<Rating>>
-    @GET("/orders")
+    @GET("/orders/{userId}")
     suspend fun getOrders(@Path("userId") userId: Int): Response<List<Order>>
     @POST("/review")
     suspend fun review(@Body requestBody: Rating): Response<Boolean>

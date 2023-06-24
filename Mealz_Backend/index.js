@@ -2,7 +2,7 @@ const {comparePasswordWithEmail} = require('./Auth');
 const { getRest,getRestById } = require('./restaurantQueries');
 const { getReviews,sendReview } = require('./reviewQueries');
 const { findMenuByRes,findMenuDetail } = require('./menuQueries');
-const { sendCommande,sendMenuCommand } = require('./commandeQueries');
+const { sendCommande,sendMenuCommand,getOrders } = require('./commandeQueries');
 const express = require('express');
 const bodyParser = require('body-parser');
 const {prisma} = require('./prismaImport')
@@ -96,7 +96,7 @@ app.get('/reviews/:restaurantId', async (req, res) => {
     res.json(reviews);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while fetching restaurants' });
+    res.status(500).json({ error: 'An error occurred while fetching reviews' });
   }
 });
 
@@ -130,6 +130,19 @@ app.post('/review', async (req, res) => {
    // Send the result back to Kotlin
    res.json(newcom);
  });
+
+//Get orders 
+app.get('/orders/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const Orders = await getOrders(userId);
+   //  console.log(reviews);
+    res.json(Orders);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while fetching orders' });
+  }
+});
 
 app.get('/', async (req, res) => {
   res.send('Hello World!')

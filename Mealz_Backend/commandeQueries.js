@@ -34,8 +34,20 @@ async function sendMenuCommand(ID_Commande,ID_Menu,Size,Quantite,Notes,ID_Restau
   }
 }
 
+async function getOrders(userId) {
+    return prisma.$queryRaw`
+    SELECT c.ID_Commande, c.Adresse_livraison, c.Prix_Tolal, r.Nom, GROUP_CONCAT(DISTINCT m.Nom) AS NomMs, m.Prix_unitare, cm.Quantite
+    FROM commande c
+    JOIN commande_menu cm ON c.ID_Commande = cm.ID_Commande
+    JOIN menu m ON cm.ID_Menu = m.ID_Menu
+    JOIN restaurant r ON m.ID_Restaurant = r.ID_Restaurant
+    WHERE c.ID_Utilisateur = ${userId}
+    GROUP BY c.ID_Commande;
+  `;
+  }
 
 module.exports = {
     sendCommande,
     sendMenuCommand,
+    getOrders
   };

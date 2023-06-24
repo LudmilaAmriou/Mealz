@@ -17,7 +17,8 @@ var _require4 = require('./menuQueries'),
 
 var _require5 = require('./commandeQueries'),
     sendCommande = _require5.sendCommande,
-    sendMenuCommand = _require5.sendMenuCommand;
+    sendMenuCommand = _require5.sendMenuCommand,
+    getOrders = _require5.getOrders;
 
 var express = require('express');
 
@@ -247,7 +248,7 @@ app.get('/reviews/:restaurantId', function _callee7(req, res) {
           _context7.t0 = _context7["catch"](0);
           console.error(_context7.t0);
           res.status(500).json({
-            error: 'An error occurred while fetching restaurants'
+            error: 'An error occurred while fetching reviews'
           });
 
         case 12:
@@ -332,17 +333,51 @@ app.post('/commandemenu', function _callee10(req, res) {
       }
     }
   });
-});
-app.get('/', function _callee11(req, res) {
+}); //Get orders 
+
+app.get('/orders/:userId', function _callee11(req, res) {
+  var userId, Orders;
   return regeneratorRuntime.async(function _callee11$(_context11) {
     while (1) {
       switch (_context11.prev = _context11.next) {
+        case 0:
+          _context11.prev = 0;
+          userId = req.params.userId;
+          _context11.next = 4;
+          return regeneratorRuntime.awrap(getOrders(userId));
+
+        case 4:
+          Orders = _context11.sent;
+          //  console.log(reviews);
+          res.json(Orders);
+          _context11.next = 12;
+          break;
+
+        case 8:
+          _context11.prev = 8;
+          _context11.t0 = _context11["catch"](0);
+          console.error(_context11.t0);
+          res.status(500).json({
+            error: 'An error occurred while fetching orders'
+          });
+
+        case 12:
+        case "end":
+          return _context11.stop();
+      }
+    }
+  }, null, null, [[0, 8]]);
+});
+app.get('/', function _callee12(req, res) {
+  return regeneratorRuntime.async(function _callee12$(_context12) {
+    while (1) {
+      switch (_context12.prev = _context12.next) {
         case 0:
           res.send('Hello World!');
 
         case 1:
         case "end":
-          return _context11.stop();
+          return _context12.stop();
       }
     }
   });

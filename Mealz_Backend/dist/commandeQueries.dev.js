@@ -1,5 +1,17 @@
 "use strict";
 
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n    SELECT c.ID_Commande, c.Adresse_livraison, c.Prix_Tolal, r.Nom, GROUP_CONCAT(DISTINCT m.Nom) AS NomMs, m.Prix_unitare, cm.Quantite\n    FROM commande c\n    JOIN commande_menu cm ON c.ID_Commande = cm.ID_Commande\n    JOIN menu m ON cm.ID_Menu = m.ID_Menu\n    JOIN restaurant r ON m.ID_Restaurant = r.ID_Restaurant\n    WHERE c.ID_Utilisateur = ", "\n    GROUP BY c.ID_Commande;\n  "]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
 var _require = require('./prismaImport'),
     prisma = _require.prisma;
 
@@ -74,7 +86,23 @@ function sendMenuCommand(ID_Commande, ID_Menu, Size, Quantite, Notes, ID_Restaur
   }, null, null, [[0, 7]]);
 }
 
+function getOrders(userId) {
+  return regeneratorRuntime.async(function getOrders$(_context3) {
+    while (1) {
+      switch (_context3.prev = _context3.next) {
+        case 0:
+          return _context3.abrupt("return", prisma.$queryRaw(_templateObject(), userId));
+
+        case 1:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  });
+}
+
 module.exports = {
   sendCommande: sendCommande,
-  sendMenuCommand: sendMenuCommand
+  sendMenuCommand: sendMenuCommand,
+  getOrders: getOrders
 };
