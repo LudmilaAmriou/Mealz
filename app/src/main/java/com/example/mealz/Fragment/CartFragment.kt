@@ -44,7 +44,9 @@ class CartFragment : Fragment(){
         val sharedPreferences =
             requireContext().getSharedPreferences("my_app", Context.MODE_PRIVATE)
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
-        val data = loadData(sharedPreferences.getInt("userId",1))
+        var userId  = sharedPreferences.getInt("userId",1)
+        if (userId == 0) userId = 1
+        val data = loadData(1) // Ici c'est local donc IDUser n'est pas important
         myAdapter = data?.let { CartItemsAdapter(it, requireContext()) } ?: CartItemsAdapter(
             mutableListOf(),
             requireContext()
@@ -57,14 +59,15 @@ class CartFragment : Fragment(){
             findNavController().navigate(R.id.action_cartFragment_to_orderFragment)
         }
 
+
         binding.cart3.setOnClickListener() {
 
             if (isLoggedIn) {
-                // Delete cart if logged In
                 val cart = appDataBase.buildDatabase(requireContext())?.getUserCartDAO()
-                    ?.getUserCart(sharedPreferences.getInt("userId", 1))
+                    ?.getUserCart(1)
+                // Delete cart if logged In
                 val num: Int? = appDataBase.buildDatabase(requireContext())?.getUserCartDAO()
-                    ?.deleteAllUserCart(sharedPreferences.getInt("userId", 1))
+                    ?.deleteAllUserCart(1)
 
                 // Insert in table commande IN DATABASE!
                 if (num != null && num != 0) {
@@ -73,7 +76,7 @@ class CartFragment : Fragment(){
                         Commande(
                             Adresse_livraison = "Alger",
                             Prix_Tolal = totalfee,
-                            ID_Utilisateur = sharedPreferences.getInt("userId", 1)
+                            ID_Utilisateur = sharedPreferences.getInt("userId", 1) // ICI C'EST IMPORTANT
                         )
                     )
                     orderModel.stateSend1.observe(requireActivity()) { state ->

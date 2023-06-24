@@ -1,9 +1,11 @@
 package com.example.mealz
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.core.content.edit
 import androidx.lifecycle.Observer
@@ -17,6 +19,8 @@ import com.example.mealz.ViewModel.LoginModel
 import com.example.mealz.ViewModel.SignUpModel
 
 import com.example.mealz.databinding.ActivityMainBinding
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : AppCompatActivity() {
     lateinit var navController: NavController
@@ -49,7 +53,6 @@ class MainActivity : AppCompatActivity() {
             val  address = binding.AddressField.text.toString()
             val signup = SignUpRequest(username = name, email =  email, password = password, address = address) // Initialize the signup property
             signUpModel.signUser(signup)
-
             signUpModel.user.observe(this, Observer { utilisateur ->
                 if (utilisateur != null) {
                     if (utilisateur.success) {

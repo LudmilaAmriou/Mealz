@@ -30,6 +30,9 @@ var _require6 = require('./prismaImport'),
 var _require7 = require('./utilisateurQueries'),
     insertUser = _require7.insertUser;
 
+var _require8 = require('./notification'),
+    sendNotification = _require8.sendNotification;
+
 var app = express();
 
 var bcrypt = require('bcrypt');
@@ -48,7 +51,8 @@ app.get('/restaus/getall', function _callee(req, res) {
 
         case 3:
           restaus = _context.sent;
-          res.json(restaus);
+          res.json(restaus); //sendNotification()
+
           _context.next = 11;
           break;
 

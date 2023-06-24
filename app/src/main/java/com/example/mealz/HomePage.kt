@@ -1,9 +1,11 @@
 package com.example.mealz
 
+import android.content.ContentValues
 import android.content.Context
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -14,10 +16,13 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.mealz.databinding.ActivityHomePageBinding
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 
 class HomePage : AppCompatActivity() {
     lateinit var navController: NavController
     private lateinit var binding: ActivityHomePageBinding
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,9 +36,22 @@ class HomePage : AppCompatActivity() {
         navController = navHostFragment.navController
         binding.navBottom.itemIconTintList = null
         NavigationUI.setupWithNavController(binding.navBottom, navController)
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(
+            OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
+                // Get new FCM registration token
+                val token = task.result.toString()
+                // Log and toast
+                Log.d("TAG", token)
 
+
+            })
 
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
         inflater.inflate(R.menu.my_menu, menu)
@@ -60,4 +78,6 @@ class HomePage : AppCompatActivity() {
         )
         textView.paint.shader = textShader
     }
+
+
 }

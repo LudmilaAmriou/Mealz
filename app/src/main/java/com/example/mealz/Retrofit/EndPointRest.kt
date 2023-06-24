@@ -31,6 +31,8 @@ interface EndPointRest {
     suspend fun commande(@Body requestBody: Commande): Response<Int>
     @POST("/commandemenu")
     suspend fun commandeMenu(@Body requestBody: Commande_menu): Response<Boolean>
+    @POST("/token")
+    suspend fun sendToken(@Body requestBody: String): Response<Boolean>
 
     companion object {
         @Volatile

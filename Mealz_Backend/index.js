@@ -7,6 +7,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const {prisma} = require('./prismaImport')
 const { insertUser } = require('./utilisateurQueries');
+const {sendNotification} = require('./notification')
 const app = express();
 const bcrypt = require('bcrypt');
 
@@ -17,6 +18,7 @@ app.get('/restaus/getall', async (req, res) => {
   try {
     const restaus = await getRest();
     res.json(restaus);
+    //sendNotification()
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while fetching restaurants' });
