@@ -37,17 +37,17 @@ class OrderItemsAdapter(
 
         fun bind(orderItem: Commande) {
             binding.apply {
-                Name.text = orderItem.Restau_Name
+              //  Name.text = orderItem.Restau_Name
                 HomePage().setGradientTextColor(
                     price ,
                     Color.parseColor("#DC220F"),
                     Color.parseColor("#F05600")
                 )
-                price.text = orderItem.Prix_tolal.toString()+" DA"
-                val orderedDishesAdapter = OrderedMenusAdapter(orderItem.Menus)
-                recyclerView.adapter = orderedDishesAdapter
-                val layoutManager = LinearLayoutManager(ctx)
-                recyclerView.layoutManager = layoutManager
+                price.text = orderItem.Prix_Tolal.toString()+" DA"
+//                val orderedDishesAdapter = OrderedMenusAdapter(orderItem.Menus)
+//                recyclerView.adapter = orderedDishesAdapter
+//                val layoutManager = LinearLayoutManager(ctx)
+//                recyclerView.layoutManager = layoutManager
 
             }
         }

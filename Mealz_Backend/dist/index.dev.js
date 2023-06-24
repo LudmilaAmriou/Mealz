@@ -15,15 +15,19 @@ var _require4 = require('./menuQueries'),
     findMenuByRes = _require4.findMenuByRes,
     findMenuDetail = _require4.findMenuDetail;
 
+var _require5 = require('./commandeQueries'),
+    sendCommande = _require5.sendCommande,
+    sendMenuCommand = _require5.sendMenuCommand;
+
 var express = require('express');
 
 var bodyParser = require('body-parser');
 
-var _require5 = require('./prismaImport'),
-    prisma = _require5.prisma;
+var _require6 = require('./prismaImport'),
+    prisma = _require6.prisma;
 
-var _require6 = require('./utilisateurQueries'),
-    insertUser = _require6.insertUser;
+var _require7 = require('./utilisateurQueries'),
+    insertUser = _require7.insertUser;
 
 var app = express();
 
@@ -104,31 +108,31 @@ app.get('/menu/:menuId', function _callee3(req, res) {
       switch (_context3.prev = _context3.next) {
         case 0:
           _context3.prev = 0;
-          menuId = req.params.menuId; //console.log(menuId);
-
+          menuId = req.params.menuId;
           _context3.next = 4;
           return regeneratorRuntime.awrap(findMenuDetail(menuId));
 
         case 4:
           menuDetails = _context3.sent;
-          res.json(menuDetails);
-          _context3.next = 12;
+          console.log(menuDetails[0]);
+          res.json(menuDetails[0]);
+          _context3.next = 13;
           break;
 
-        case 8:
-          _context3.prev = 8;
+        case 9:
+          _context3.prev = 9;
           _context3.t0 = _context3["catch"](0);
           console.error(_context3.t0);
           res.status(500).json({
             error: 'An error occurred while fetching menu details'
           });
 
-        case 12:
+        case 13:
         case "end":
           return _context3.stop();
       }
     }
-  }, null, null, [[0, 8]]);
+  }, null, null, [[0, 9]]);
 }); // Get rest by Id
 
 app.get('/restau/:restaurantId', function _callee4(req, res) {
@@ -268,27 +272,77 @@ app.post('/review', function _callee8(req, res) {
 
         case 4:
           newrev = _context8.sent;
-          console.log(newrev); // Send the result back to Kotlin
-
+          //console.log(newrev);
+          // Send the result back to Kotlin
           res.json(newrev);
 
-        case 7:
+        case 6:
         case "end":
           return _context8.stop();
       }
     }
   });
-});
-app.get('/', function _callee9(req, res) {
+}); // Send command
+
+app.post('/commande', function _callee9(req, res) {
+  var _req$body4, Adresse_livraison, Prix_Tolal, ID_Utilisateur, newcom;
+
   return regeneratorRuntime.async(function _callee9$(_context9) {
     while (1) {
       switch (_context9.prev = _context9.next) {
+        case 0:
+          _req$body4 = req.body, Adresse_livraison = _req$body4.Adresse_livraison, Prix_Tolal = _req$body4.Prix_Tolal, ID_Utilisateur = _req$body4.ID_Utilisateur;
+          _context9.next = 3;
+          return regeneratorRuntime.awrap(sendCommande(Adresse_livraison, Prix_Tolal, ID_Utilisateur));
+
+        case 3:
+          newcom = _context9.sent;
+          console.log(newcom); // Send the result back to Kotlin
+
+          res.json(newcom);
+
+        case 6:
+        case "end":
+          return _context9.stop();
+      }
+    }
+  });
+}); // Send menu command
+
+app.post('/commandemenu', function _callee10(req, res) {
+  var _req$body5, ID_Commande, ID_Menu, Size, Quantite, Notes, ID_Restaurant, newcom;
+
+  return regeneratorRuntime.async(function _callee10$(_context10) {
+    while (1) {
+      switch (_context10.prev = _context10.next) {
+        case 0:
+          _req$body5 = req.body, ID_Commande = _req$body5.ID_Commande, ID_Menu = _req$body5.ID_Menu, Size = _req$body5.Size, Quantite = _req$body5.Quantite, Notes = _req$body5.Notes, ID_Restaurant = _req$body5.ID_Restaurant;
+          _context10.next = 3;
+          return regeneratorRuntime.awrap(sendMenuCommand(ID_Commande, ID_Menu, Size, Quantite, Notes, ID_Restaurant));
+
+        case 3:
+          newcom = _context10.sent;
+          console.log(newcom); // Send the result back to Kotlin
+
+          res.json(newcom);
+
+        case 6:
+        case "end":
+          return _context10.stop();
+      }
+    }
+  });
+});
+app.get('/', function _callee11(req, res) {
+  return regeneratorRuntime.async(function _callee11$(_context11) {
+    while (1) {
+      switch (_context11.prev = _context11.next) {
         case 0:
           res.send('Hello World!');
 
         case 1:
         case "end":
-          return _context9.stop();
+          return _context11.stop();
       }
     }
   });

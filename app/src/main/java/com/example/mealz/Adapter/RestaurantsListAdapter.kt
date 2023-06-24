@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.util.Log
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -41,6 +42,7 @@ class RestaurantsListAdapter(
             rating.text = data[position].Rating.toString()
             Type.text = data[position].Nom_Type.toString()
             Glide.with(ctx).load(data[position].Image).into(restaurantLogo)
+            //Log.d("PIC LINK",data[position].Image.toString())
         }
 
         holder.binding.facebook.setOnClickListener {

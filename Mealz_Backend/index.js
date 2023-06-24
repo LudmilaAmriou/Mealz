@@ -2,13 +2,14 @@ const {comparePasswordWithEmail} = require('./Auth');
 const { getRest,getRestById } = require('./restaurantQueries');
 const { getReviews,sendReview } = require('./reviewQueries');
 const { findMenuByRes,findMenuDetail } = require('./menuQueries');
+const { sendCommande,sendMenuCommand } = require('./commandeQueries');
 const express = require('express');
 const bodyParser = require('body-parser');
 const {prisma} = require('./prismaImport')
 const { insertUser } = require('./utilisateurQueries');
 const app = express();
 const bcrypt = require('bcrypt');
-require('dotenv').config();
+
 
 app.use(bodyParser.json());
 // Define an endpoint to get all restaurants
@@ -40,10 +41,9 @@ app.get('/menus/:restaurantId', async(req, res) => {
 app.get('/menu/:menuId', async(req, res) => {
   try{
     const menuId = req.params.menuId;
-    //console.log(menuId);
     const menuDetails = await findMenuDetail(menuId);
-  
-    res.json(menuDetails);
+    console.log(menuDetails[0])
+    res.json(menuDetails[0]);
 } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while fetching menu details' });
@@ -107,9 +107,28 @@ app.post('/review', async (req, res) => {
   const { ID_Utilisateur, ID_Restaurant, Rating, Commentaire } = req.body;
   console.log(req.body);
    const newrev = await sendReview(ID_Utilisateur,ID_Restaurant,Rating,Commentaire);
-  console.log(newrev);
+  //console.log(newrev);
    // Send the result back to Kotlin
    res.json(newrev);
+ });
+ // Send command
+ app.post('/commande', async (req, res) => {
+ 
+  
+  const {Adresse_livraison,Prix_Tolal,ID_Utilisateur} = req.body;
+   const newcom = await sendCommande(Adresse_livraison,Prix_Tolal,ID_Utilisateur);
+  console.log(newcom);
+   // Send the result back to Kotlin
+   res.json(newcom);
+ });
+
+ // Send menu command
+ app.post('/commandemenu', async (req, res) => {
+  const {ID_Commande, ID_Menu,Size, Quantite,	Notes,ID_Restaurant} = req.body;
+   const newcom = await sendMenuCommand(ID_Commande, ID_Menu,Size, Quantite,	Notes,ID_Restaurant);
+  console.log(newcom);
+   // Send the result back to Kotlin
+   res.json(newcom);
  });
 
 app.get('/', async (req, res) => {

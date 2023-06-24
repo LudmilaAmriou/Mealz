@@ -29,8 +29,8 @@ class OrderedMenusAdapter(private val orderedDishes: List<Commande_menu>) : Recy
         private val quantityTextView: TextView = itemView.findViewById(R.id.quantity)
 
         fun bind(orderedDish: Commande_menu) {
-            dishNameTextView.text = orderedDish.Menu_Name
-            quantityTextView.text = "x" + orderedDish.quantity.toString()+" "
+     //       dishNameTextView.text = orderedDish.Menu_Name
+          //  quantityTextView.text = "x" + orderedDish.quantity.toString()+" "
         }
     }
 

@@ -90,6 +90,8 @@ class ReviewsFragment : Fragment(), CellClickListener {
                             "Thank you, your rating will be of great use!",
                             Toast.LENGTH_SHORT
                         ).show()
+                        adapter.notifyDataSetChanged()
+
                     } else {
                         Toast.makeText(
                             requireContext(),

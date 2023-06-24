@@ -44,7 +44,6 @@ class MenuItemDetailsFragment : Fragment() {
 
         menuModel.menu.observe(viewLifecycleOwner, Observer { menu ->
 
-
             if (menu != null) {
                 binding.Category.text = menu.Nom_TMenu
                 binding.Name.text = menu.Nom
@@ -55,13 +54,15 @@ class MenuItemDetailsFragment : Fragment() {
                 )
                 binding.Price.text = menu.Prix_unitare.toString() + " DA"
                 binding.ServingInfo.text = "1 Person"
-                binding.Description.text = menu.Ingredients
+                binding.Description.text = menu.Description
+                binding.IngredientsList.text = menu.Ingredients
+
 
                 // Add a button to redirect user only if they are logged in
                 binding.cart.setOnClickListener {
                     // Redirect to authenticated page
                     findNavController().navigate(R.id.action_menuItemDetailsFragment_to_cartFragment)
-                    Log.d("TGG",menu.Nom_TMenu.toString())
+
                     // Insert element to database
                     val resto = appDataBase.buildDatabase(requireContext())?.getUserCartDAO()
                         ?.getUserCart(1)
@@ -73,6 +74,7 @@ class MenuItemDetailsFragment : Fragment() {
                             IDRestaurant = menu.ID_Restaurant,
                             Image = menu.Image,
                             Prix_unitare = menu.Prix_unitare,
+                            Note = binding.Notes.text.toString(),
                             Nom_TMenu = menu.Nom_TMenu.toString(),
                             Nom = menu.Nom,
                         )

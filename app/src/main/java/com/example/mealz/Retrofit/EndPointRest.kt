@@ -23,8 +23,14 @@ interface EndPointRest {
     suspend fun signup(@Body requestBody: SignUpRequest): Response<utilisateur>
     @GET("/reviews/{restaurantId}")
     suspend fun getReviews(@Path("restaurantId") restaurantId: Int): Response<List<Rating>>
+    @GET("/orders")
+    suspend fun getOrders(@Path("userId") userId: Int): Response<List<Order>>
     @POST("/review")
     suspend fun review(@Body requestBody: Rating): Response<Boolean>
+    @POST("/commande")
+    suspend fun commande(@Body requestBody: Commande): Response<Int>
+    @POST("/commandemenu")
+    suspend fun commandeMenu(@Body requestBody: Commande_menu): Response<Boolean>
 
     companion object {
         @Volatile

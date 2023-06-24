@@ -12,12 +12,14 @@ async function findMenuByRes(restId) {
         return menus;
       }
 async function findMenuDetail(MenuId) {
-  const menu = await prisma.menu.findFirst({
-    where: {
-      ID_Menu: parseInt(MenuId,10) ,
-    },
-  });
-  return menu;
+      const menus = await prisma.$queryRaw`
+      SELECT menu.*, type_menu.Nom_TMenu
+      FROM menu, type_menu
+      WHERE menu.ID_TMenu = type_menu.ID_TMenu
+        AND menu.ID_Menu = ${MenuId};
+      ;
+      `;
+      return menus;
 }
   
   module.exports = {

@@ -1,5 +1,15 @@
 "use strict";
 
+function _templateObject2() {
+  var data = _taggedTemplateLiteral(["\n      SELECT menu.*, type_menu.Nom_TMenu\n      FROM menu, type_menu\n      WHERE menu.ID_TMenu = type_menu.ID_TMenu\n        AND menu.ID_Menu = ", ";\n      ;\n      "]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject() {
   var data = _taggedTemplateLiteral(["\n          SELECT m.*, t.Nom_TMenu\n          FROM menu m\n          JOIN type_menu t ON m.ID_TMenu = t.ID_TMenu\n          WHERE m.ID_Restaurant = ", ";\n        "]);
 
@@ -37,21 +47,17 @@ function findMenuByRes(restId) {
 }
 
 function findMenuDetail(MenuId) {
-  var menu;
+  var menus;
   return regeneratorRuntime.async(function findMenuDetail$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
           _context2.next = 2;
-          return regeneratorRuntime.awrap(prisma.menu.findFirst({
-            where: {
-              ID_Menu: parseInt(MenuId, 10)
-            }
-          }));
+          return regeneratorRuntime.awrap(prisma.$queryRaw(_templateObject2(), MenuId));
 
         case 2:
-          menu = _context2.sent;
-          return _context2.abrupt("return", menu);
+          menus = _context2.sent;
+          return _context2.abrupt("return", menus);
 
         case 4:
         case "end":

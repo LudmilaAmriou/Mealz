@@ -8,24 +8,24 @@ datasource db {
 }
 
 model commande {
-  ID_Commande       Int     @id
-  Prix_Commande     Int?
+  ID_Commande       Int     @id @default(autoincrement())
   Adresse_livraison String? @db.VarChar(120)
-  Prix_Tolal        Int?
-  Frais_Livraison   Int?
+  Prix_Tolal        Float?  @db.Float
   ID_Utilisateur    Int
 
   @@index([ID_Utilisateur], map: "ID_1")
 }
 
 model commande_menu {
-  ID_Commande Int
-  ID_Menu     Int
-  Size        Int?
-  Quantit_    String? @map("Quantité") @db.VarChar(50)
+  ID_Commande   Int    @id
+  ID_Menu       Int
+  Size          Int?
+  Quantite      Int?
+  Notes         String @db.VarChar(1000)
+  ID_Restaurant Int
 
-  @@id([ID_Commande, ID_Menu])
   @@index([ID_Menu], map: "ID_1")
+  @@index([ID_Restaurant], map: "ID_Restaurant")
 }
 
 model menu {
@@ -33,6 +33,7 @@ model menu {
   Nom           String? @db.VarChar(50)
   Prix_unitare  Float?  @db.Float
   Ingredients   String? @db.VarChar(1000)
+  Description   String  @db.VarChar(500)
   Image         String? @db.VarChar(120)
   ID_Restaurant Int
   ID_TMenu      Int
@@ -41,12 +42,12 @@ model menu {
 }
 
 model rating {
+  ID_Rating      Int      @id @default(autoincrement())
   ID_Utilisateur Int
   ID_Restaurant  Int
   Rating         Decimal? @db.Decimal(5, 2)
   Commentaire    String?  @db.VarChar(120)
 
-  @@id([ID_Utilisateur, ID_Restaurant])
   @@index([ID_Restaurant], map: "ID_1")
 }
 
