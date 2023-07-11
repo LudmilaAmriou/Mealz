@@ -17,60 +17,67 @@ import com.example.mealz.ViewModel.LoginModel
 import com.example.mealz.ViewModel.MenuModel
 import com.example.mealz.databinding.ActivityHomePageBinding
 import com.example.mealz.databinding.ActivityLogInBinding
-
 class LogIn : AppCompatActivity() {
     private lateinit var binding: ActivityLogInBinding
-    lateinit var loginModel:LoginModel
-
+    private lateinit var loginModel: LoginModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLogInBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
-        HomePage().setGradientTextColor(
-            binding.textView4,
-            Color.parseColor("#DC220F"),
-            Color.parseColor("#F05600")
-        )
+        setContentView(binding.root)
+
+        // Initialize ViewModel
         loginModel = ViewModelProvider(this).get(LoginModel::class.java)
 
-        val screen = intent.getStringExtra("screen")
-
+        // Set up click listener for login button
         binding.buttonLogin.setOnClickListener {
             val email = binding.emailField.text.toString()
             val password = binding.passwordField.text.toString()
-            val log = LoginRequest(email, password) // Initialize the log property
+            val log = LoginRequest(email, password)
+
             loginModel.logUser(log)
 
-            // Move the observer outside the button click listener
+            // Observe the login response
             loginModel.user.observe(this, Observer { utilisateur ->
                 if (utilisateur != null) {
                     if (utilisateur.success) {
-                        val sharedPreferences = getSharedPreferences("my_app", Context.MODE_PRIVATE)
+                        val sharedPreferences =
+                            getSharedPreferences("my_app", Context.MODE_PRIVATE)
+
+                        // Store login status and user ID in SharedPreferences
                         sharedPreferences.edit {
                             putBoolean("isLoggedIn", true)
-                            utilisateur.ID_Utilisateur?.let { it1 -> putInt("userId", it1) }
+                            utilisateur.ID_Utilisateur?.let { userId ->
+                                putInt("userId", userId)
+                            }
                         }
-                        // Continue with the desired logic for a successful login
-                        // Redirect to cart page
-                        /*
-                                val intent = Intent(this, HomePage::class.java)
-                                intent.putExtra("screen", screen)
-                                startActivity(intent)
-                                */
+
+                        // Redirect to the cart page
+                        Toast.makeText(
+                            this,
+                            "Login successful. Command has been successfully added!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        val intent = Intent(this, HomePage::class.java)
+                        intent.putExtra("screen", "cart")
+                        startActivity(intent)
+
+                        // Finish the login activity
                         finish()
+                    } else {
+                        // Display toast message for unsuccessful login
+                        Toast.makeText(this, utilisateur.message, Toast.LENGTH_SHORT).show()
                     }
-                }
-                if (utilisateur != null) {
-                    Toast.makeText(this, utilisateur.message, Toast.LENGTH_SHORT).show()
                 }
             })
         }
-        binding.textView4.setOnClickListener{
+
+        // Set up click listener for sign up text
+        binding.textView4.setOnClickListener {
             finish()
 
-            // Start the sign up activity
+            // Start the sign-up activity
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }

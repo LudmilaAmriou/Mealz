@@ -36,19 +36,19 @@ class HomePage : AppCompatActivity() {
         navController = navHostFragment.navController
         binding.navBottom.itemIconTintList = null
         NavigationUI.setupWithNavController(binding.navBottom, navController)
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(
-            OnCompleteListener { task ->
-                if (!task.isSuccessful) {
-                    Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)
-                    return@OnCompleteListener
-                }
-                // Get new FCM registration token
-                val token = task.result.toString()
-                // Log and toast
-                Log.d("TAG", token)
-
-
-            })
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener(
+//            OnCompleteListener { task ->
+//                if (!task.isSuccessful) {
+//                    Log.w(ContentValues.TAG, "Fetching FCM registration token failed", task.exception)
+//                    return@OnCompleteListener
+//                }
+//                // Get new FCM registration token
+//                val token = task.result.toString()
+//                // Log and toast
+//                Log.d("TAG", token)
+//
+//
+//            })
 
     }
 

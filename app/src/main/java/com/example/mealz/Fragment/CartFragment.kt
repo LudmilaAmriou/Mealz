@@ -104,7 +104,7 @@ class CartFragment : Fragment(){
                             // Notify the adapter that the data has changed
                             myAdapter.data.clear()
                             myAdapter.notifyDataSetChanged()
-                            findNavController().navigate(R.id.action_cartFragment_to_orderFragment)
+                             findNavController().navigate(R.id.action_cartFragment_to_orderFragment)
                         }
                     }
                 }
